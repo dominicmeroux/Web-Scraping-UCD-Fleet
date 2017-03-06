@@ -182,13 +182,16 @@ write.csv(AltFuels, file = "UCDavis_FleetServices_AFVs16.csv", row.names = F)
 ########### For future Queries, read in CSV rather than go through steps again
 ########### NOTE: Last data run was March 4, 2017
 DF = read.csv("UCDavis_FleetServices_FULL.csv")
-colnames(DF) = colnames(Result) = c( "Unit", "Asset_Type", "Mileage","Year", "Make", "Model",
-                                     "Owning_Dept", "Using_Dept", "Matched_URL", "CAMS_Property_Number",
-                                     "Fuel", "In_Service", "License_Tag", "Make_1", "Mileage_1", "Model_1",
-                                     "Owning_Department", "Parking_Location", "Unit_Description", "Unit_Number",
-                                     "Using_Department", "Utilization", "Vehicle_Identifier", "Year_1", "LTD (mi/mo)",
-                                     "12mo (mi/mo)", "6mo (mi/mo)", "3mo (mi/mo)", "LTD (mi)", "12mo (mi)",
-                                     "6mo (mi)", "3mo (mi)" )
+colnames(DF) = c( "Unit", "Asset_Type", "Mileage","Year", "Make", "Model",
+                  "Owning_Dept", "Using_Dept", "Matched_URL", "CAMS_Property_Number",
+                  "Fuel", "In_Service", "License_Tag", "Make_1", "Mileage_1", "Model_1",
+                  "Owning_Department", "Parking_Location", "Unit_Description", "Unit_Number",
+                  "Using_Department", "Utilization", "Vehicle_Identifier", "Year_1", "LTD (mi/mo)",
+                  "12mo (mi/mo)", "6mo (mi/mo)", "3mo (mi/mo)", "LTD (mi)", "12mo (mi)",
+                  "6mo (mi)", "3mo (mi)" )
 
 ########### FUTURE QUERIES
 # Enter any desired future queries on the final dataframe here
+# EXAMPLE: we want to identify the MY 2017 Ford Fusions in the fleet, as well as their fuel type (seperating Fusion gasoline, Fusion Hybrid, Fusion Energi)
+Fusions = sqldf("select Year, Make, Model, Fuel, Vehicle_Identifier as VIN from DF where Make = 'FORD' and Model = 'FUSION'")
+write.csv(Fusions, file = "Fusions.csv", row.names = F)
